@@ -1,0 +1,56 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List App</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h2>To-do List App</h2>
+            <input type="text" placeholder="Write here..." id="inputBx">
+            <ul id="list"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Selecting input box and list
+        let inputBx = document.querySelector('#inputBx');
+        let list = document.querySelector('#list');
+
+        // Add event listener for 'Enter' key
+        inputBx.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                addItem(this.value);
+                this.value = ""; // Clear input box
+            }
+        });
+
+        // Function to add an item
+        let addItem = (task) => {
+            if (task.trim() === "") return; // Prevent empty tasks
+
+            // Create new list item
+            let listItem = document.createElement("li");
+            listItem.innerHTML = `${task} <i class="delete-btn">X</i>`; // Add task and delete button
+
+            // Toggle done class on click
+            listItem.addEventListener("click", function() {
+                this.classList.toggle('done');
+            });
+
+            // Add event listener to delete button
+            listItem.querySelector('.delete-btn').addEventListener("click", function(event) {
+                event.stopPropagation(); // Prevent triggering parent click event
+                listItem.remove(); // Remove the clicked task
+            });
+
+            // Append the new item to the list
+            list.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>
